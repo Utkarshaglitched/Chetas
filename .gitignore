@@ -5,3 +5,4 @@ dataset/*
 npySaves/*
 __pycache__/*
 .vscode/*
+randomfiles/* 
