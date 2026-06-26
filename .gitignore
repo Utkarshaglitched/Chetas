@@ -2,3 +2,6 @@ Models/*
 testfiles/*
 venv/*
 dataset/*
+npySaves/*
+__pycache__/*
+.vscode/*
