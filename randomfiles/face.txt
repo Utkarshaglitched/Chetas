@@ -1,0 +1,203 @@
+who am i
+who is this
+who is that
+identify this person
+identify that person
+recognize this face
+recognize that face
+do you know who i am
+do you know this person
+who is standing in front of me
+who is in front of the camera
+who are you looking at
+tell me who this is
+can you identify me
+can you identify this face
+can you recognize me
+can you recognize him
+can you recognize her
+who does this face belong to
+whose face is this
+what person do you see
+do you know that person
+have you seen this person before
+is this person in your database
+match this face
+compare this face
+verify my identity
+verify this person's identity
+face verification
+face recognition
+perform face recognition
+recognize the person
+identify the individual
+who is standing there
+who is near me
+who just entered the room
+who is that guy
+who is that girl
+who is that man
+who is that woman
+what is this person's name
+tell me this person's name
+what do you know about this person
+have we met before
+am i registered
+is this a known person
+is this someone you know
+who is looking at the camera
+who is in the frame
+identify everyone in the room
+how many faces do you see
+count the faces
+detect faces
+find faces
+locate faces
+is there a face visible
+do you see anyone
+who is present here
+who entered the room
+who walked into the room
+who is sitting there
+who is standing there
+can you tell who that is
+do you recognize the visitor
+identify the visitor
+recognize the visitor
+who just arrived
+is this utkarsha
+is this rahul
+is this a known user
+is this an authorized user
+is this a registered user
+am i the person you think i am
+check my identity
+confirm my identity
+who does this person look like
+find a match for this face
+search for this face
+compare against known faces
+is this face familiar
+do you remember this person
+who is closest to the camera
+which person is that
+tell me about the detected person
+who is visible right now
+recognize everyone present
+identify all faces
+who is on camera
+who is appearing in the image
+who can you recognize
+who is being detected
+what faces do you detect
+find the person's name
+match the detected face
+whose identity is this
+who am i according to your database
+can you tell who i am
+do you know me
+have you seen me before
+who am i to you
+can you tell my name
+what is my name
+who do you think i am
+am i recognized
+have you recognized me
+did you recognize me
+who are you seeing
+who is looking at you
+who is in the picture
+who is in this image
+who is shown here
+whose picture is this
+whose face do you see
+which person is this
+which face is this
+can you match this person
+can you match this face
+find this person's identity
+find this face in the database
+search for this person
+look up this person
+look up this face
+is this person known
+is this face known
+is this person familiar
+is this someone registered
+is this someone authorized
+does this face match anyone
+does this person match anyone
+who does this face match
+who does this person match
+can you identify the user
+identify the current user
+recognize the current user
+who is currently in front of you
+who is currently visible
+who is directly in front of the camera
+who is nearest to the camera
+who is farthest from the camera
+which face belongs to whom
+tell me the identity of this person
+tell me the identity of this face
+what identity do you detect
+what person have you detected
+which user is present
+which registered user is present
+which known person is present
+can you identify everybody
+can you recognize everybody
+can you identify all people
+can you recognize all people
+how many people can you recognize
+which faces are recognized
+which faces are known
+which faces are unfamiliar
+are there any known faces
+are there any unknown faces
+is there an unknown person
+is there a stranger present
+do you recognize anyone here
+who among them do you know
+who among them is recognized
+identify the stranger
+identify the unknown person
+recognize the known person
+who is the detected user
+who is the detected individual
+who is this user
+who is the current user
+is the correct person present
+does this face belong to a registered user
+does this face belong to me
+does this person belong in the database
+is this face stored in memory
+is this face in your records
+have you stored this face before
+have you encountered this face before
+who has just appeared
+who has entered the frame
+who left the frame
+who is moving in front of the camera
+track this person
+follow this person's face
+keep track of this face
+which face should i focus on
+who is the main person in view
+who is centered in the frame
+who is the largest face in view
+whose face is closest
+whose face is farthest
+which person are you tracking
+who are you tracking
+identify the tracked person
+recognize the tracked face
+tell me the tracked person's name
+is this the same person as before
+have i seen this face already
+does this face match a previous face
+is this the same user
+can you verify that this is me
+can you verify this user's identity
+can you authenticate this user
+authenticate the person in front of you

@@ -1,0 +1,207 @@
+how many bottles are there
+how many chairs can you see
+how many people are visible
+how many objects are present
+count the bottles
+count the cups
+count the chairs
+count the people
+count everything you can see
+how many items are on the table
+is there a bottle in the room
+is there a cup on the table
+is there a chair nearby
+is there a laptop here
+is there a phone on the desk
+is there a person in front of me
+is there anyone in the room
+does the room contain a bottle
+does the scene contain a chair
+does the image contain a person
+where is the chair located
+where is the bottle located
+where is the cup located
+where is the phone located
+where is the laptop located
+which side is the bottle on
+which side is the chair on
+which side is the person on
+is the bottle on the left
+is the bottle on the right
+is the chair on the left
+is the chair on the right
+is the object in the center
+what is to my left
+what is to my right
+what is above the table
+what is below the shelf
+what is next to the bottle
+what is beside the chair
+what is near the laptop
+what is closest to the bottle
+what is farthest from the chair
+what color is the bottle
+what color is the cup
+what color is the chair
+what color is the object
+what shape is the object
+is the bottle red
+is the cup blue
+is the chair black
+describe the bottle
+describe the chair
+describe the cup
+describe the laptop
+describe the object
+what does the object look like
+what is the largest object
+what is the smallest object
+which object takes the most space
+which object is biggest
+which object is tiniest
+what object stands out
+what object is in the middle
+what object is near the wall
+what object is near the door
+what object is near the window
+what object is on top of the table
+what object is under the table
+what object is hanging on the wall
+what object is resting on the floor
+tell me about the scene
+summarize the scene
+give me a scene description
+explain what is happening
+what activities do you observe
+what is going on in the room
+what can be seen in the image
+what items are present in the image
+identify all visible items
+detect everything visible
+find every object
+list every detected object
+name everything you see
+tell me all detected objects
+which objects are indoors
+which objects are outdoors
+is there any furniture visible
+is there any electronic device visible
+is there any food visible
+is there any vehicle visible
+what tools do you see
+what appliances do you see
+what devices do you see
+what furniture do you see
+which objects are movable
+which objects are stationary
+what object is being held
+what object is the person holding
+what item is in the person's hand
+identify the held object
+detect the carried object
+what object has appeared
+what new object do you see
+did a new object enter the scene
+what objects are on the floor
+what objects are on the table
+what objects are on the desk
+what objects are on the shelf
+what objects are on the bed
+what objects are on the chair
+show me the objects
+identify nearby items
+identify nearby things
+what stuff do you see
+what stuff is around me
+what can you spot
+what catches your attention
+what items can be detected
+what things can be detected
+what is visible around me
+scan for items
+scan for things
+search the room
+look around the room
+inspect the surroundings
+identify everything around me
+tell me all the items present
+tell me what exists here
+what objects exist here
+what can be found nearby
+can you see any bottles
+can you see any chairs
+can you see any tables
+can you see any laptops
+can you see any phones
+can you see any bags
+can you see any people
+can you spot a bottle
+can you spot a chair
+can you spot a person
+can you locate a bottle
+can you locate a chair
+can you locate a person
+where can i find the bottle
+where can i find the chair
+where can i find the laptop
+where can i find my phone
+where can i find my bag
+which objects are left of me
+which objects are right of me
+which objects are above me
+which objects are below me
+what is near the center
+what is near the edge
+what is in the corner
+what is beside the wall
+what is beside the door
+what is beside the window
+what is behind the chair
+what is behind the table
+what is behind the person
+what is in the background
+what is in the foreground
+what object is most visible
+what object is easiest to see
+what object dominates the scene
+which item stands out most
+which object draws attention
+what is the main object
+what is the primary object
+what object appears largest
+what object appears smallest
+which object occupies the center
+which item is most prominent
+which object is most noticeable
+what are people holding
+what is the person carrying
+what is being carried
+what object is being used
+what item is being used
+what object was just detected
+what item was just detected
+what appeared in the scene
+what disappeared from the scene
+has anything changed in the scene
+did anything new appear
+did anything leave the scene
+compare objects in the scene
+compare the visible items
+group similar objects
+find objects of the same type
+find matching objects
+find duplicate objects
+which objects look alike
+which items belong together
+which objects are related
+which objects are important
+which objects are unusual
+which objects are uncommon
+identify the unusual object
+identify the strange object
+tell me about visible objects
+describe the visible items
+summarize detected objects
+provide object information
+analyze visible items
+report detected objects
