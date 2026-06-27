@@ -10,19 +10,20 @@ cursor.execute("""
 CREATE TABLE IF NOT EXISTS memory (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     people TEXT,
+    sentence TEXT,
     embedding TEXT,
     date DATETIME
 )
 """)
 
-def add(people,embedding):
+def add(people,sentence,embedding):
     try:
         cursor.execute(
             """
-            INSERT INTO memory(people,embedding,date)
-            VALUES (?,?,?)
+            INSERT INTO memory(people,sentence,embedding,date)
+            VALUES (?,?,?,?)
             """,
-            (people,embedding,datetime.now(UTC))
+            (people,sentence,embedding,datetime.now(UTC))
         )
         conn.commit()
 

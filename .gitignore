@@ -6,5 +6,5 @@ npySaves/*
 __pycache__/*
 .vscode/*
 randomfiles/* 
-env/*
+.env/*
 database/*
