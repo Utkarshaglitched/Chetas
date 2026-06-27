@@ -1,5 +1,4 @@
 import sqlite3
-import time
 from datetime import datetime, UTC
 
 conn=sqlite3.connect("database/memory.db")
@@ -42,3 +41,6 @@ def retrive(ppl):
     result=cursor.fetchall()
     return list(result)
 
+for i in retrive("Utkarsha"):
+    print(i[3])
+    print()
