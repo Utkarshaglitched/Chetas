@@ -2,14 +2,9 @@ import numpy
 import ollama
 from cosine import cosine
 import time
+from variables import category_dict
 
 
-category_dict={
-    "conversation":numpy.load("npySaves/convo.npy"),  
-    "DepthDetection":numpy.load("npySaves/depth.npy"),
-    "ObjectDetection":numpy.load("npySaves/obj.npy"),
-    "FaceRecognistion":numpy.load("npySaves/face.npy")
-}
 
 def select_model(words):
     response=ollama.embed(
