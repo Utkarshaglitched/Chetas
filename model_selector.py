@@ -7,10 +7,16 @@ from variables import category_dict
 
 
 def select_model(words):
-    response=ollama.embed(
-        model="qwen3-embedding:8b",
-        input=words
-    )
+    try:
+        response=ollama.embed(
+            model="qwen3-embedding:8b",
+            input=words
+        )
+    except Exception as e:
+        raise RuntimeError(
+            "Could not connect to Ollama. Make sure Ollama is installed and running, then run 'ollama pull qwen3-embedding:8b' and 'ollama serve'."
+        ) from e
+
     embedding=response["embeddings"][0]
 
     sim_list=[]

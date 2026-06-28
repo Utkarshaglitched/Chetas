@@ -16,13 +16,12 @@ def embed_convert(text):
 
 
 def context(text,ppl):
-    threshold=0.7
+    threshold=0.6
     response=retrive(ppl)
     embed=embed_convert(text)
-    print(len(embed))
     max_list=[]
     for i in response:
-        print(len(json.loads(i[3])))
+        # print(len(json.loads(i[3])))
         sim=cosine.consimilaritry(embed,json.loads(i[3]))
         if sim>=threshold:
             max_list.append(response.index(i))
@@ -37,3 +36,4 @@ def context(text,ppl):
     
     return context
 
+# print(context("do you know what I love","Utkarsha"))

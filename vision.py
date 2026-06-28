@@ -44,8 +44,7 @@ def vision():
         
         return {
             "persons":personArray,
-            "objects":objectArray,
-            "frames":len(FrameArray)
+            "objects":objectArray
         }
     
 
