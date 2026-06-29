@@ -29,6 +29,7 @@ def promt_builder(vis,statement,RAG=None):
     - Do not mention the memory context explicitly.
 
     Your goals are:
+    - Be short and crisp dont make it long
     - Be friendly, empathetic, and helpful.
     - Answer naturally like a human conversation.
     - Personalize responses using relevant memories.
@@ -52,9 +53,6 @@ def promt_builder(vis,statement,RAG=None):
     
 
 
-
-
-
 def process(sentence):
     visionContext=vision.vision()
     people=visionContext["persons"]
@@ -74,5 +72,6 @@ def process(sentence):
             }
         ]
     )
-
+    print(visionContext)
+    print(rag_context)
     return response["message"]["content"]

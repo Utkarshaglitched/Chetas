@@ -41,6 +41,3 @@ def retrive(ppl):
     result=cursor.fetchall()
     return list(result)
 
-for i in retrive("Utkarsha"):
-    print(i[3])
-    print()

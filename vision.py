@@ -53,8 +53,7 @@ def person_check(face):
         embed=app.get(face)[0].embedding
 
         cnt_sim=[]
-
-        recog=[]    
+  
         for i in facial:
             face_embed=facial[i]
             cnt_sim.append(cosine.consimilaritry(embed,face_embed))

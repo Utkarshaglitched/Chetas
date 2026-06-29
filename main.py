@@ -2,10 +2,10 @@ import model_selector
 import time
 
 while True:
-    start=time.perf_counter()
 
     print("enter '/bye' to exit")
     x=input("Enter your sentance: ")
+    start=time.perf_counter()
 
     if x.lower()=="/bye":
         break

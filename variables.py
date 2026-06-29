@@ -1,8 +1,8 @@
 import numpy
 
 facial={
-    "ankit":numpy.load("npySaves/Ankit.npy"),
-    "utkarsha":numpy.load("npySaves/utkarsha.npy"),
+    "Ankit":numpy.load("npySaves/Ankit.npy"),
+    "Utkarsha":numpy.load("npySaves/utkarsha.npy"),
     "chachu":numpy.load("npySaves/chachu.npy")
 }
 

@@ -15,25 +15,25 @@ def embed_convert(text):
     return embedding
 
 
-def context(text,ppl):
-    threshold=0.6
+def context(text,ppl,k=10):
+    print(ppl)
     response=retrive(ppl)
     embed=embed_convert(text)
-    max_list=[]
+    
+    sentence_list=[]
     for i in response:
-        # print(len(json.loads(i[3])))
+        
         sim=cosine.consimilaritry(embed,json.loads(i[3]))
-        if sim>=threshold:
-            max_list.append(response.index(i))
-    
-    context=[]
-    for j in max_list:
 
-        context.append({
-            "memory":response[j][2],
-            "date":response[j][4]
-            })
-    
+        sentence_list.append((sim,{
+            i[2]:i[4]
+        }))
+
+    sorted_list = sorted(sentence_list, key=lambda pair: pair[0], reverse=True)
+    context=sorted_list[:k]
+        
     return context
 
-# print(context("do you know what I love","Utkarsha"))
+def reranking(cntext):
+    pass
+
