@@ -21,7 +21,12 @@ while True:
     
     if model=="conversation":
         from convo import process
-        print(f"\n\n{process(x)}\n")
+        res=process(x)
+        print(res)
+        if res:
+            print(res)
+        else:
+            print("Nothings recived")
 
     elif model=="DepthDetection":
         pass

@@ -1,7 +1,7 @@
 import ollama
 import vision
 from RAGcontext import context
-model="qwen3.5:4b"
+from variables import ollama_model
 
 def promt_builder(vis,statement,RAG=None):
     
@@ -64,7 +64,7 @@ def process(sentence):
         promt=promt_builder(visionContext,sentence)
 
     response=ollama.chat(
-        model=model,
+        model=ollama_model,
         messages=[
             {
                 "role":"user",
@@ -74,4 +74,5 @@ def process(sentence):
     )
     print(visionContext)
     print(rag_context)
+    print(response["message"]["content"])
     return response["message"]["content"]

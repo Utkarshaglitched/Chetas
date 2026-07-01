@@ -14,3 +14,5 @@ category_dict={
     "DepthDetection":numpy.load("npySaves/depth.npy"),
     "ObjectDetection":numpy.load("npySaves/obj.npy")
 }
+
+ollama_model="qwen3.5:4b"
