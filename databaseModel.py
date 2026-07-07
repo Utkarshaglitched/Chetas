@@ -6,21 +6,21 @@ BASE_DIR = Path(__file__).resolve().parent
 DB_PATH = BASE_DIR / "database" / "memory.db"
 DB_PATH.parent.mkdir(parents=True, exist_ok=True)
 
-conn = sqlite3.connect(DB_PATH)
-
-cursor = conn.cursor()
-
-cursor.execute("""
-CREATE TABLE IF NOT EXISTS memory (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    people TEXT,
-    sentence TEXT,
-    embedding TEXT,
-    date DATETIME
-)
-""")
+with sqlite3.connect(DB_PATH) as conn:
+    conn.execute("""
+    CREATE TABLE IF NOT EXISTS memory (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        people TEXT,
+        sentence TEXT,
+        embedding TEXT,
+        date DATETIME
+    )
+    """)
 
 def add(people,sentence,embedding):
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+
     try:
         cursor.execute(
             """
@@ -36,7 +36,36 @@ def add(people,sentence,embedding):
         print(e)
         return False
     
+    finally:
+        conn.close()
+
+
+def update(id,sentance,emb):
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute(
+            """
+            UPDATE memory SET 
+            sentence=?,embedding=? 
+            WHERE id=?
+            """,(sentance,emb,id)
+        )
+        conn.commit()
+        return True
+
+    except Exception as e:
+        print(e)
+        return False
+    
+    finally:
+        conn.close()
+
 def retrive(ppl):
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+
     cursor.execute(
         """
         SELECT * FROM memory WHERE people=?
@@ -44,4 +73,8 @@ def retrive(ppl):
     )
 
     result=cursor.fetchall()
+    
+    conn.close()
     return list(result)
+
+

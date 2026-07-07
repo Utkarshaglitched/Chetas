@@ -4,7 +4,7 @@ from RAGcontext import context
 from variables import ollama_model
 import threading 
 import json
-
+from databaseModel import add,update
 
 def memory_prompt_builder(RAG, person, sp):
     memory = ""
@@ -21,38 +21,41 @@ The examples below are ONLY to teach you the decision pattern. They are unrelate
 the real person and real message you must judge. Never copy content from these examples 
 into your answer — only use them to understand the logic.
 
-CRITICAL RULE: If the person's identity is "Unknown", ALWAYS respond with action "ignore", 
-no matter what the message says. Memories must always be tied to a known, identified person. 
-Never store anything about an unidentified/unknown person.
+CRITICAL RULE 1: If the person's identity is "Unknown", ALWAYS respond with action "ignore", 
+no matter what the message says.
+
+CRITICAL RULE 2: A short opinion or feeling statement ("I hate X", "I love X", "X is boring now") 
+is NOT small talk if X relates to an existing memory. If it contradicts or reverses something 
+already stored, it is ALWAYS an "update", even if the message is short and has no explanation.
 
 Example A:
 Person: Unknown
 Message: "I love hiking"
-→ Person isn't identified, cannot attach memory to anyone. action: "ignore"
+→ Person isn't identified. action: "ignore"
 
 Example B:
 Message: "how's it going" 
-→ Greeting/small talk, not a fact. action: "ignore"
+→ Greeting, not a fact. action: "ignore"
 
 Example C:
 Message: "I collect vintage stamps"
 Existing memories: none related
-→ New fact, nothing similar exists. action: "insert", sentence: "the person collects vintage stamps"
+→ New fact. action: "insert", sentence: "the person collects vintage stamps"
 
 Example D:
-Message: "actually I sold my stamp collection, not into it anymore"
+Message: "I hate stamps now"
 Existing memory: id=7: "the person collects vintage stamps"
-→ Contradicts existing memory id=7. action: "update", replaces_id: 7,
-   sentence: "the person no longer collects stamps, sold the collection"
+→ Short but directly contradicts id=7. action: "update", replaces_id: 7,
+   sentence: "the person now hates stamps, no longer collects them"
 
 Example E:
 Message: "what time is it"
-→ A question, not a fact. action: "ignore"
+→ A question. action: "ignore"
 
 Example F:
 Message: "yeah I still collect stamps"
 Existing memory: id=7: "the person collects vintage stamps"
-→ Already known, nothing new. action: "duplicate"
+→ Already known. action: "duplicate"
 
 Now here is the REAL task. Base your decision ONLY on the real message and real memories below, 
 ignoring the example content entirely.
@@ -67,13 +70,15 @@ NEW MESSAGE FROM {person}:
 
 Rules:
 - If the person is "Unknown", action MUST be "ignore" — no exceptions.
+- Any statement, even short ones, that contradicts or reverses an existing memory is "update", 
+  never "ignore" — check the existing memories carefully before deciding this is small talk.
 - "insert": new fact worth remembering, nothing similar exists yet.
 - "update": ONLY use this if you are also setting replaces_id to a real id number 
   from the memories listed above. If you cannot identify which specific id it replaces, 
   use "insert" instead, never "update" with a null id.
 - "duplicate": repeats something already known, no new info.
-- "ignore": greetings, small talk, questions, requests, unidentified person, or anything 
-  with no lasting personal relevance.
+- "ignore": greetings, questions, requests, unidentified person, or statements with no 
+  connection to anything in the memories above and no lasting personal relevance.
 
 Respond with ONLY this JSON, nothing else:
 {{
@@ -83,7 +88,6 @@ Respond with ONLY this JSON, nothing else:
 }}
 """
     return EXTRACTION_PROMPT
-
 
 def promt_builder(vis, statement, RAG=None):
     ppl = ""
@@ -136,7 +140,7 @@ Guidelines:
 User: {statement}
 You:"""
     
-def start_storing(wh,pl,sen):
+def start_storing(wh,pl,sen,emb):
 
     prompt=memory_prompt_builder(wh,pl,sen)
 
@@ -152,6 +156,30 @@ def start_storing(wh,pl,sen):
 
     raw_text = response["message"]["content"]
     data=json.loads(raw_text)
+
+
+    if data["action"]=="insert":
+        res=add(pl,data["sentence"],emb)
+        if res:
+            print("New Data added")
+        else:
+            print("New Data addition failed")
+
+
+    elif data["action"]=="update":
+        up=update(data["replaces_id"],data["sentence"],emb)
+        if up:
+            print("data updated!!")
+        else:
+            print("failed to update data")
+
+
+    elif data["action"]=="duplicate":
+        print("No data addition needed")
+    
+    elif data["action"]=="ignore":
+        print("No data addition needed")
+    
     print()
     print(data)
     print()
@@ -162,10 +190,10 @@ def process(sentence):
     people=visionContext["persons"]
     promt=""
     if len(people)==1:
-        rag_context=context(sentence,people[0])
+        rag_context,embed=context(sentence,people[0])
         promt=promt_builder(visionContext,sentence,rag_context)
         
-        t1=threading.Thread(target=start_storing,args=(rag_context,people[0],sentence))
+        t1=threading.Thread(target=start_storing,args=(rag_context,people[0],sentence,embed))
         t1.start()
 
         print(rag_context)

@@ -29,7 +29,7 @@ def context(text,ppl,k=10):
     sorted_list = sorted(sentence_list, key=lambda pair: pair[0], reverse=True)
     context=sorted_list[:k]
         
-    return context
+    return context,embed
 
 def reranking(cntext):
     pass
