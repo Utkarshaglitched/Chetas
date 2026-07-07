@@ -27,7 +27,7 @@ def add(people,sentence,embedding):
             INSERT INTO memory(people,sentence,embedding,date)
             VALUES (?,?,?,?)
             """,
-            (people,sentence,embedding,datetime.now(UTC))
+            (people,sentence,str(embedding),datetime.now(UTC))
         )
         conn.commit()
 
@@ -50,7 +50,7 @@ def update(id,sentance,emb):
             UPDATE memory SET 
             sentence=?,embedding=? 
             WHERE id=?
-            """,(sentance,emb,id)
+            """,(sentance,str(emb),id)
         )
         conn.commit()
         return True
