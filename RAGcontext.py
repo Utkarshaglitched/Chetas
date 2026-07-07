@@ -3,11 +3,11 @@ import ollama
 from databaseModel import retrive
 from cosine import cosine
 from datetime import UTC,datetime
-model="qwen3-embedding:8b"
+from variables import rag_model
 
 def embed_convert(text):
     res=ollama.embed(
-        model=model,
+        model=rag_model,
         input=text
     )
     embedding=res["embeddings"][0]
@@ -16,7 +16,6 @@ def embed_convert(text):
 
 
 def context(text,ppl,k=10):
-    print(ppl)
     response=retrive(ppl)
     embed=embed_convert(text)
     
@@ -25,9 +24,7 @@ def context(text,ppl,k=10):
         
         sim=cosine.consimilaritry(embed,json.loads(i[3]))
 
-        sentence_list.append((sim,{
-            i[2]:i[4]
-        }))
+        sentence_list.append((sim,i[0],i[1],i[2],i[4]))
 
     sorted_list = sorted(sentence_list, key=lambda pair: pair[0], reverse=True)
     context=sorted_list[:k]
@@ -37,3 +34,4 @@ def context(text,ppl,k=10):
 def reranking(cntext):
     pass
 
+# print(context("love","Ankit"))

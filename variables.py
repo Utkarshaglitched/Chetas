@@ -15,4 +15,5 @@ category_dict={
     "ObjectDetection":numpy.load("npySaves/obj.npy")
 }
 
-ollama_model="qwen3.5:4b"
+ollama_model="granite4.1:3b"
+rag_model="qwen3-embedding:0.6b"

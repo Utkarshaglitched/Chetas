@@ -22,7 +22,6 @@ while True:
     if model=="conversation":
         from convo import process
         res=process(x)
-        print(res)
         if res:
             print(res)
         else:

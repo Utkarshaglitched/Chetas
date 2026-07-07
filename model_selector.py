@@ -1,7 +1,6 @@
-import numpy
+
 import ollama
 from cosine import cosine
-import time
 from variables import category_dict
 
 
@@ -9,7 +8,7 @@ from variables import category_dict
 def select_model(words):
     try:
         response=ollama.embed(
-            model="qwen3-embedding:8b",
+            model="qwen3-embedding:0.6b",
             input=words
         )
     except Exception as e:

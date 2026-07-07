@@ -1,9 +1,14 @@
 import sqlite3
 from datetime import datetime, UTC
+from pathlib import Path
 
-conn=sqlite3.connect("database/memory.db")
+BASE_DIR = Path(__file__).resolve().parent
+DB_PATH = BASE_DIR / "database" / "memory.db"
+DB_PATH.parent.mkdir(parents=True, exist_ok=True)
 
-cursor=conn.cursor()
+conn = sqlite3.connect(DB_PATH)
+
+cursor = conn.cursor()
 
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS memory (
@@ -40,4 +45,3 @@ def retrive(ppl):
 
     result=cursor.fetchall()
     return list(result)
-
