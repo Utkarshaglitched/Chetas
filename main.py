@@ -51,6 +51,7 @@ while True:
         for i in result:
             status=i
             if status=="start":
+                frames = []
                 voice_detected=True
                 print("Detected Voice")
                 
@@ -73,39 +74,44 @@ while True:
 
                 for seg in segments:
                     text += seg.text + " "
-                print(len(text))
+                text=text.strip()
+                print(repr(text))
                 frames=[]
+                # vad.reset_states()
 
                 try:
-                    model,conf=model_selector.select_model(text)
-                    print(model)
+                    if text:
+                        model,conf=model_selector.select_model(text)
+                        print(model)
+                        if model=="conversation":
+                            from convo import process
+                            res=process(text)
+                            if res:
+                                print(res)
+                            else:
+                                print("Nothings recived")
+                            time.sleep(0.3)
+
+                        elif model=="DepthDetection":
+                            pass
+                        elif model=="ObjectDetection":
+                            pass
+                        elif model=="FaceRecognistion":
+                            pass
+
+                        else:
+                            from convo import process
+                            print(f"\n\n{process(text)}\n")
+
+                        end=time.perf_counter()
+                        print(f"Time taken to complete: {(end-start):.2f} seconds")
 
                 except RuntimeError as e:
                     print(e)
                     print()
                     continue
                 
-                if model=="conversation":
-                    from convo import process
-                    res=process(text)
-                    if res:
-                        print(res)
-                    else:
-                        print("Nothings recived")
-
-                elif model=="DepthDetection":
-                    pass
-                elif model=="ObjectDetection":
-                    pass
-                elif model=="FaceRecognistion":
-                    pass
-
-                else:
-                    from convo import process
-                    print(f"\n\n{process(text)}\n")
-
-                end=time.perf_counter()
-                print(f"Time taken to complete: {(end-start):.2f} seconds")
+                
     
     if voice_detected:
             frames.append(data)
