@@ -1,22 +1,8 @@
 import time
-from ultralytics import YOLO
-from insightface.app import FaceAnalysis
 from cosine import cosine
+from load import (yolo_model,picam2,facial_app)
 from variables import facial
-from picamera2 import Picamera2
-from libcamera import Transform
 
-app=FaceAnalysis()
-model=YOLO("Models/yolov8n.pt")
-picam2 = Picamera2()
-
-config = picam2.create_video_configuration(
-    main={"size": (416, 416), "format": "RGB888"},
-    buffer_count=4,
-    transform=Transform(vflip=True)
-)
-
-picam2.configure(config)
 picam2.start()
 
 def vision():
@@ -35,7 +21,7 @@ def vision():
     if len(FrameArray) > 0:
         frme = FrameArray[int(len(FrameArray) / 2)]
 
-        results = model(frme,verbose=False)
+        results = yolo_model(frme,verbose=False)
 
         for result in results:
             boxes = result.boxes
@@ -68,8 +54,8 @@ def vision():
     
 
 def person_check(face):
-    if app.get(face):
-        embed=app.get(face)[0].embedding
+    if facial_app.get(face):
+        embed=facial_app.get(face)[0].embedding
 
         cnt_sim=[]
   

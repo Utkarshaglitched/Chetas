@@ -7,7 +7,7 @@ import time
 # ----------------------------
 # Load YOLO Model
 # ----------------------------
-model = YOLO("yolov8n.pt")      # Change if your model name is different
+model = YOLO("Models/yolov8n.pt")      # Change if your model name is different
 
 # ----------------------------
 # Initialize Camera

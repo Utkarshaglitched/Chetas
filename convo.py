@@ -193,9 +193,9 @@ def process(sentence):
         rag_context,embed=context(sentence,people[0])
         promt=promt_builder(visionContext,sentence,rag_context)
         
-        t1=threading.Thread(target=start_storing,args=(rag_context,people[0],sentence,embed))
-        t1.start()
+        # t1=threading.Thread(target=start_storing,args=(rag_context,people[0],sentence,embed))
 
+        # t1.start()
         print(rag_context)
     else:
         promt=promt_builder(visionContext,sentence)

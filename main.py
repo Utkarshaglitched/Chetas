@@ -1,43 +1,15 @@
 import model_selector
 import time
 import numpy as np
-import pyaudio
-from faster_whisper import WhisperModel
-from silero_vad import load_silero_vad,VADIterator
+import os
+from load import (stream,vad,CHUNK,whisper_model)
 import torch
 
-
-DEVICE_INDEX = 0
-RATE = 16000
-CHANNELS = 1
-CHUNK = 512
-
-audio=pyaudio.PyAudio()
-stream = audio.open(
-    format=pyaudio.paInt16,
-    channels=CHANNELS,
-    rate=RATE,
-    input=True,
-    input_device_index=DEVICE_INDEX,
-    frames_per_buffer=CHUNK,
-)
-
-whisper_model = WhisperModel(
-    "base",
-    device="cpu",
-    compute_type="int8"
-)
-
-
-vad_model=load_silero_vad()
-vad = VADIterator(
-    vad_model,
-    threshold=0.5,
-    sampling_rate=16000
-)
 voice_detected=False
 frames=[]
+os.system('clear')
 while True:
+    
     text = ""
     data=stream.read(CHUNK,exception_on_overflow=False)
 
@@ -67,7 +39,7 @@ while True:
 
                 segments, info = whisper_model.transcribe(
                     audio_np,
-                    language="hi",
+                    language="en",
                     beam_size=1
                 )
 
@@ -85,23 +57,25 @@ while True:
                         print(model)
                         if model=="conversation":
                             from convo import process
+                            os.system('clear')
                             res=process(text)
                             if res:
+                                os.system('clear')
                                 print(res)
                             else:
                                 print("Nothings recived")
-                            time.sleep(0.3)
+                            
 
                         elif model=="DepthDetection":
                             pass
                         elif model=="ObjectDetection":
                             pass
-                        elif model=="FaceRecognistion":
-                            pass
 
                         else:
                             from convo import process
-                            print(f"\n\n{process(text)}\n")
+                            result = process(text)
+                            os.system('clear')
+                            print(result)
 
                         end=time.perf_counter()
                         print(f"Time taken to complete: {(end-start):.2f} seconds")
