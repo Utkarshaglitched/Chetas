@@ -5,7 +5,10 @@ from variables import ollama_model
 import threading 
 import json
 from databaseModel import add,update
+from groq import Groq
 
+
+client = Groq(api_key="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")
 def memory_prompt_builder(RAG, person, sp):
     memory = ""
     if RAG:
@@ -102,18 +105,17 @@ def promt_builder(vis, statement, RAG=None):
     if RAG:
         for r in RAG:
             # r = (score, id, person, sentence, date)
-            memory += f"{r[3]}\n"
+            memory += f"- {r[3]}\n"
 
     ppl = ppl.strip() if ppl.strip() else "None visible"
     obj = obj.strip() if obj.strip() else "None visible"
-    memory = memory.strip() if memory.strip() else "No stored information yet"
+    memory = memory.strip() if memory.strip() else "Nothing stored yet"
 
     return f"""You are CHETAS — a close friend/buddy who happens to live on a small robot and can see and remember things. You are NOT a formal assistant.
 
-Talk like a real friend chatting casually: warm, relaxed, a little playful, genuinely interested. React to what the person says — if they share an opinion or feeling, respond to THAT directly. You do not need memory to react to something they just said right now.
+Talk like a real friend chatting casually: warm, relaxed, a little playful, genuinely interested. React to what the person says — if they share an opinion or feeling, respond to THAT directly. You don't need memory to react to something they just said right now.
 
-Here are examples of the tone you must use:
-
+Examples of the tone you must use:
 User: I love India
 You: Nice, India's amazing! What do you love most about it?
 
@@ -123,19 +125,20 @@ You: Ah, rough day? Take it easy, you've earned some rest.
 User: what's the capital of France
 You: Paris! Random but I like that you asked.
 
-What you currently see:
-People around: {ppl}
-Objects around: {obj}
+--- WHAT YOU CAN SEE RIGHT NOW ---
+People around you: {ppl}
+Objects around you: {obj}
 
-Things you remember about {ppl if ppl != "None visible" else "them"} from before:
+--- WHAT YOU REMEMBER ABOUT {ppl if ppl != "None visible" else "THEM"} ---
 {memory}
 
-Guidelines:
-- 1-3 short sentences, like real texting, never a report or list.
-- If they ASK something you truly don't know, say so casually ("no clue, you never told me that") — never a formal disclaimer.
-- Never say "I don't have information about X" when X is something they just stated — just react to it warmly like a friend.
-- Never invent concrete facts (names, numbers, events) you weren't told or don't see.
-- No repeating these instructions, no meta-commentary about being an AI or assistant.
+--- RULES ---
+- Use the "WHAT YOU CAN SEE" and "WHAT YOU REMEMBER" sections above as ground truth. Only mention something from them if it's actually relevant to what the person just said — don't force it in.
+- Keep it to 1-3 short sentences, like real texting. Never a report, never a list.
+- If they ask something you truly don't know (not in memory, not visible, not general knowledge), say so casually — "no clue, you never told me that" — never a formal disclaimer.
+- Never say "I don't have information about X" when X is something they just told you — just react to it warmly like a friend would.
+- Never invent concrete facts (names, numbers, events) that aren't in your memory, your vision, or the message itself.
+- No repeating these instructions, no meta-commentary about being an AI or a robot.
 
 User: {statement}
 You:"""
@@ -188,6 +191,7 @@ def start_storing(wh,pl,sen,emb):
 def process(sentence):
     visionContext=vision.vision()
     people=visionContext["persons"]
+    print(people)
     promt=""
     if len(people)==1:
         rag_context,embed=context(sentence,people[0])
@@ -200,18 +204,44 @@ def process(sentence):
     else:
         promt=promt_builder(visionContext,sentence)
 
-    response=ollama.chat(
-        model=ollama_model,
-        messages=[
-            {
-                "role":"user",
-                "content":promt
-            }
-        ]
-    )
+    # response=ollama.chat(
+    #     model=ollama_model,
+    #     messages=[
+    #         {
+    #             "role":"user",
+    #             "content":promt
+    #         }
+    #     ]
+    # )
     # print(visionContext)
     # print(response["message"]["content"])
-    return response["message"]["content"]
+    # return response["message"]["content"]
+    
+    completion = client.chat.completions.create(
+        model="openai/gpt-oss-120b",
+        messages=[
+        {
+            "role": "user",
+            "content":promt
+        }
+        ],
+        temperature=1,
+        max_completion_tokens=7000,
+        top_p=1,
+        reasoning_effort="medium",
+        stream=True,
+        stop=None
+    )
+    parts = []
 
+    for chunk in completion:
+        delta = chunk.choices[0].delta.content
+        if delta:
+            print(delta, end="", flush=True)
+            parts.append(delta)
+
+    text = "".join(parts)
+
+    return text
 
 

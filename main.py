@@ -4,12 +4,14 @@ import numpy as np
 import os
 from load import (stream,vad,CHUNK,whisper_model)
 import torch
+import speak
+
+
 
 voice_detected=False
 frames=[]
 os.system('clear')
 while True:
-    
     text = ""
     data=stream.read(CHUNK,exception_on_overflow=False)
 
@@ -49,7 +51,6 @@ while True:
                 text=text.strip()
                 print(repr(text))
                 frames=[]
-                # vad.reset_states()
 
                 try:
                     if text:
@@ -62,6 +63,13 @@ while True:
                             if res:
                                 os.system('clear')
                                 print(res)
+                                speech_status=speak.speech(res)
+                                if speech_status:
+                                    spoke_status,msg=speak.speak()
+
+                                    if not spoke_status:
+                                        print(msg)
+
                             else:
                                 print("Nothings recived")
                             

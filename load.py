@@ -12,7 +12,7 @@ yolo_model=YOLO("Models/yolov8n.pt")
 picam2 = Picamera2()
 
 config = picam2.create_video_configuration(
-    main={"size": (416, 416), "format": "RGB888"},
+    main={"size": (640, 640), "format": "RGB888"},
     buffer_count=4,
     transform=Transform(vflip=True)
 )
@@ -45,6 +45,6 @@ whisper_model = WhisperModel(
 vad_model=load_silero_vad()
 vad = VADIterator(
     vad_model,
-    threshold=0.3,
+    threshold=0.5,
     sampling_rate=16000
 )
