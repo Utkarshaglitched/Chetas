@@ -1,6 +1,6 @@
 import json
 import ollama
-from database.databaseModel import retrive
+from data.databaseModel import retrive
 from retirival import cosine
 from datetime import UTC,datetime
 from variables import rag_model

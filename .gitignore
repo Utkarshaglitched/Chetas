@@ -43,7 +43,7 @@ dataset/
 npySaves/
 randomfiles/
 database/
-
+speech/*
 # Optional local SQLite databases
 *.db
 *.sqlite3

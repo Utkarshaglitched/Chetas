@@ -1,5 +1,5 @@
 import ollama
-from vision import vision 
+from retirival.vision import vision as get_vision_context
 from retirival.RAGcontext import context
 from variables import ollama_model
 import threading 
@@ -195,7 +195,7 @@ def start_storing(wh,pl,sen,emb):
     return data
 
 def process(sentence):
-    visionContext=vision.vision()
+    visionContext=get_vision_context()
     people=visionContext["persons"]
     print(people)
     promt=""
