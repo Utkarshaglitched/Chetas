@@ -1,10 +1,11 @@
 import ollama
-import vision
-from RAGcontext import context
+from vision import vision 
+from retirival.RAGcontext import context
 from variables import ollama_model
 import threading 
 import json
-from databaseModel import add,update
+
+from data.databaseModel import add,update
 from groq import Groq
 from dotenv import load_dotenv
 import os

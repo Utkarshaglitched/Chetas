@@ -1,7 +1,7 @@
 import json
 import ollama
-from databaseModel import retrive
-from cosine import cosine
+from database.databaseModel import retrive
+from retirival import cosine
 from datetime import UTC,datetime
 from variables import rag_model
 
@@ -34,4 +34,4 @@ def context(text,ppl,k=10):
 def reranking(cntext):
     pass
 
-# print(context("love","Ankit"))
+# print(context("love","Ankit")) #print("love u too","Utkarsh")

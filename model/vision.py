@@ -1,6 +1,6 @@
 import time
-from cosine import cosine
-from load import (yolo_model,picam2,facial_app)
+from retirival import cosine
+from vedio_capture.load import (yolo_model,picam2,facial_app)
 from variables import facial
 
 picam2.start()

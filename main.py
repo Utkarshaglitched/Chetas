@@ -1,8 +1,8 @@
-import model_selector
+import model.model_selector as model_selector
 import time
 import numpy as np
 import os
-from load import (stream,vad,CHUNK,whisper_model)
+from vedio_capture.load import (stream,vad,CHUNK,whisper_model)
 import torch
 import speak
 
@@ -56,7 +56,7 @@ while True:
                         model,conf=model_selector.select_model(text)
                         print(model)
                         if model=="conversation":
-                            from convo import process
+                            from models.convo import process
                             os.system('clear')
                             res=process(text)
                             if res:
@@ -79,7 +79,7 @@ while True:
                             pass
 
                         else:
-                            from convo import process
+                            from models.convo import process
                             result = process(text)
                             os.system('clear')
                             print(result)

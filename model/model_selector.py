@@ -1,6 +1,6 @@
 
 import ollama
-from cosine import cosine
+from retirival.cosine import consimilaritry
 from variables import category_dict
 
 
@@ -23,7 +23,7 @@ def select_model(words):
         sim_max2=0
         val=category_dict[i]
         for j in val:
-            sim=cosine.consimilaritry(embedding,j)
+            sim=consimilaritry(embedding,j)
             if sim>sim_max2:
                 sim_max2=sim
             else:

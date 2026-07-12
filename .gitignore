@@ -1,12 +1,50 @@
-Models/*
-testfiles/*
-venv/*
-dataset/*
-npySaves/*
-__pycache__/*
-.vscode/*
-randomfiles/* 
-.env/*
-database/*
-speech/*
+=======
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.pyre/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Packaging and build outputs
+build/
+dist/
+*.egg-info/
+pip-wheel-metadata/
+
+# Coverage and test artifacts
+.coverage
+.coverage.*
+htmlcov/
+
+# Local environment and secrets
 .env
+.env.*
+*.local
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Project-generated data and scratch space
+Models/
+testfiles/
+dataset/
+npySaves/
+randomfiles/
+database/
+
+# Optional local SQLite databases
+*.db
+*.sqlite3
+

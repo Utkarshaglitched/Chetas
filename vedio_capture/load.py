@@ -1,6 +1,6 @@
 from ultralytics import YOLO
 from insightface.app import FaceAnalysis
-from cosine import cosine
+from retirival import cosine
 from picamera2 import Picamera2
 from libcamera import Transform
 import pyaudio
