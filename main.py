@@ -7,7 +7,6 @@ import torch
 import speak
 
 
-
 voice_detected=False
 frames=[]
 os.system('clear')

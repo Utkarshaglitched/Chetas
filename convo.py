@@ -6,9 +6,14 @@ import threading
 import json
 from databaseModel import add,update
 from groq import Groq
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+groq_api_key = os.getenv("GROQ_API_KEY")
+client = Groq(api_key=groq_api_key)
 
 
-client = Groq(api_key="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")
 def memory_prompt_builder(RAG, person, sp):
     memory = ""
     if RAG:

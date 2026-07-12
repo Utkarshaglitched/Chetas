@@ -6,10 +6,9 @@ import subprocess
 from dotenv import load_dotenv
 import os
 
+
 load_dotenv()
-
 groq_api_key = os.getenv("GROQ_API_KEY")
-
 client = Groq(api_key=groq_api_key)
 
 output_path = "/home/pi/Desktop/Virtual-Chetas/speech/speaker/speech.wav"
