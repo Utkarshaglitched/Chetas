@@ -1,7 +1,7 @@
 
 import ollama
 from retirival.cosine import consimilaritry
-from variables import category_dict
+from variables.variables import category_dict
 
 
 

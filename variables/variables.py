@@ -15,5 +15,13 @@ category_dict={
     "ObjectDetection":numpy.load("npySaves/obj.npy")
 }
 
+speakers={
+    "Utkarsha":numpy.load("npySaves/voice/Utkarsha.npy")
+}
+
+vision_dict={
+
+}
+
 ollama_model="granite4.1:3b"
 rag_model="qwen3-embedding:0.6b"

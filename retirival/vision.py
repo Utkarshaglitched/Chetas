@@ -1,7 +1,7 @@
 import time
 from retirival import cosine
 from load import (yolo_model,picam2,facial_app)
-from variables import facial
+from variables.variables import facial
 
 picam2.start()
 

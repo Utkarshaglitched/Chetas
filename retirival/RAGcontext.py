@@ -3,7 +3,7 @@ import ollama
 from data.databaseModel import retrive
 from retirival import cosine
 from datetime import UTC,datetime
-from variables import rag_model
+from variables.variables import rag_model
 
 def embed_convert(text):
     res=ollama.embed(
