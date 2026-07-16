@@ -5,11 +5,21 @@ import os
 from load import (stream,vad,CHUNK,whisper_model)
 import torch
 import speak
-
+from variables import state
+import threading
+from retirival.vision import vision
 
 voice_detected=False
+
+state.vision_event.set()
+vision_thread=threading.Thread(target=vision,daemon=True)
+vision_thread.start()
+print("starting camera")
+
+
 frames=[]
 os.system('clear')
+
 while True:
     text = ""
     data=stream.read(CHUNK,exception_on_overflow=False)
@@ -33,6 +43,9 @@ while True:
                 voice_detected=False
                 
                 print("starting whisper")
+
+                
+                
                 start=time.perf_counter()
                 audio_data = b"".join(frames)
                 audio_np = np.frombuffer(audio_data, dtype=np.int16)
@@ -58,6 +71,11 @@ while True:
                         if model=="conversation":
                             from model.convo import process
                             os.system('clear')
+                            
+                            state.vision_event.clear()
+                            vision_thread.join()
+
+
                             res=process(text)
                             if res:
                                 os.system('clear')
@@ -65,7 +83,7 @@ while True:
                                 speech_status=speak.speech(res)
                                 if speech_status:
                                     spoke_status,msg=speak.speak()
-
+                                    time.sleep(0.1)
                                     if not spoke_status:
                                         print(msg)
 
@@ -91,7 +109,12 @@ while True:
                     print(e)
                     print()
                     continue
+
                 
+                state.vision_event.set()
+                vision_thread=threading.Thread(target=vision,daemon=True)
+                vision_thread.start()
+                print("starting camera")
                 
     
     if voice_detected:

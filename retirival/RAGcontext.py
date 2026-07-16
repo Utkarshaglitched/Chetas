@@ -16,20 +16,27 @@ def embed_convert(text):
 
 
 def context(text,ppl,k=10):
-    response=retrive(ppl)
-    embed=embed_convert(text)
-    
-    sentence_list=[]
-    for i in response:
+    cntx=[]
+    for p in ppl:
+        if p=="unknown":
+            continue
+        response=retrive(p)
+        embed=embed_convert(text)
         
-        sim=cosine.consimilaritry(embed,json.loads(i[3]))
+        sentence_list=[]
+        for i in response:
+            
+            sim=cosine.consimilaritry(embed,json.loads(i[3]))
 
-        sentence_list.append((sim,i[0],i[1],i[2],i[4]))
+            sentence_list.append((sim,i[0],i[1],i[2],i[4]))
 
-    sorted_list = sorted(sentence_list, key=lambda pair: pair[0], reverse=True)
-    context=sorted_list[:k]
-        
-    return context,embed
+        sorted_list = sorted(sentence_list, key=lambda pair: pair[0], reverse=True)
+        context=sorted_list[:k]
+            
+        cntx.append( {
+            p:(context,embed)
+            })
+    return cntx
 
 def reranking(cntext):
     pass

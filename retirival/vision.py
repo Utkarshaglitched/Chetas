@@ -2,25 +2,28 @@ import time
 from retirival import cosine
 from load import (yolo_model,picam2,facial_app)
 from variables.variables import facial
+from variables import state
+import threading
+
 
 picam2.start()
 
 def vision():
-    start = time.perf_counter()
+    # start = time.perf_counter()
 
-    FrameArray = []
+    # # FrameArray = []
 
-    while (time.perf_counter() - start) <= 1:
+    while state.vision_event.is_set():
         frame = picam2.capture_array()
-        FrameArray.append(frame)
+        # FrameArray.append(frame)
 
-    objectArray = []
-    personArray = []
+        objectArray = []
+        personArray = []
 
-    if len(FrameArray) > 0:
-        frme = FrameArray[int(len(FrameArray) / 2)]
+        # if len(FrameArray) > 0:
+        #     frme = FrameArray[int(len(FrameArray) / 2)]
 
-        results = yolo_model(frme,verbose=False)
+        results = yolo_model(frame,verbose=False)
 
         for result in results:
             boxes = result.boxes
@@ -33,7 +36,7 @@ def vision():
                     if int(j) == 0:
                         x1, y1, x2, y2 = box.xyxy[0]
 
-                        f = frme[
+                        f = frame[
                             int(y1):int(y2),
                             int(x1):int(x2)
                         ]
@@ -46,7 +49,7 @@ def vision():
                             result.names[int(j)]
                         )
 
-        return {
+        state.vision_context_frame={
             "persons": personArray,
             "objects": objectArray
         }
@@ -66,4 +69,4 @@ def person_check(face):
         if cnt_sim[max_sim_index]>0.6:  
             return list(facial.keys())[max_sim_index]
         
-        return "Uknown"
+        return "unknown"
