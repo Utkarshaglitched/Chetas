@@ -68,8 +68,9 @@ def process(sentence):
     prompt=""
     rag_context=context(sentence,people)
     prompt=prompts.prompt_builder(state.vision_context_frame,sentence,rag_context)
-    print(rag_context)
+    print(prompt)
     
+    # print(rag_context)
     # t1=threading.Thread(target=start_storing,args=(rag_context,people[0],sentence,embed))
 
     # t1.start()
@@ -93,12 +94,7 @@ def process(sentence):
     
     completion = client.chat.completions.create(
         model="openai/gpt-oss-120b",
-        messages=[
-        {
-            "role": "user",
-            "content":prompt
-        }
-        ],
+        messages=prompt,
         temperature=1,
         max_completion_tokens=7000,
         top_p=1,

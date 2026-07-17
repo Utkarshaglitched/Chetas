@@ -23,5 +23,10 @@ vision_dict={
 
 }
 
+convo_history=[
+    
+]
+
+
 ollama_model="granite4.1:3b"
 rag_model="qwen3-embedding:0.6b"

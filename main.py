@@ -5,7 +5,7 @@ import os
 from load import (stream,vad,CHUNK,whisper_model)
 import torch
 import speak
-from variables import state
+from variables import state,variables
 import threading
 from retirival.vision import vision
 
@@ -75,8 +75,9 @@ while True:
                             state.vision_event.clear()
                             vision_thread.join()
 
-
-                            res=process(text)
+                            
+                        
+                            res=process(text.strip())
                             if res:
                                 os.system('clear')
                                 print(res)
@@ -86,6 +87,20 @@ while True:
                                     time.sleep(0.1)
                                     if not spoke_status:
                                         print(msg)
+                                
+                                variables.convo_history.append(
+                                {
+                                    "role":"user",
+                                    "content": text.strip()
+                                }
+                                )
+
+                                variables.convo_history.append(
+                                    {
+                                        "role":"assistant",
+                                        "content": res
+                                    }
+                                )
 
                             else:
                                 print("Nothings recived")
