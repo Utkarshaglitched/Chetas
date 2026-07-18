@@ -50,7 +50,12 @@ while True:
                 audio_data = b"".join(frames)
                 audio_np = np.frombuffer(audio_data, dtype=np.int16)
                 audio_np = audio_np.astype(np.float32) / 32768.0
-
+                
+                after_spoke=time.perf_counter()
+                
+                state.vision_event.clear()
+                vision_thread.join()
+                
                 segments, info = whisper_model.transcribe(
                     audio_np,
                     language="en",
@@ -70,17 +75,15 @@ while True:
                         print(model)
                         if model=="conversation":
                             from model.convo import process
-                            os.system('clear')
-                            
-                            state.vision_event.clear()
-                            vision_thread.join()
-
-                            
+                            os.system('clear')          
                         
                             res=process(text.strip())
                             if res:
                                 os.system('clear')
                                 print(res)
+                                
+                                print(f"\n{time.perf_counter()-after_spoke}\n")
+                                
                                 speech_status=speak.speech(res)
                                 if speech_status:
                                     spoke_status,msg=speak.speak()
