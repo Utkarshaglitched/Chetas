@@ -18,7 +18,7 @@ print("starting camera")
 
 
 frames=[]
-os.system('clear')
+ 
 
 while True:
     text = ""
@@ -75,12 +75,12 @@ while True:
                         print(model)
                         if model=="conversation":
                             from model.convo import process
-                            os.system('clear')          
+                                       
                         
                             res=process(text.strip())
                             if res:
-                                os.system('clear')
-                                print(res)
+                                #  
+                                # print(res)
                                 
                                 print(f"\n{time.perf_counter()-after_spoke}\n")
                                 
@@ -117,7 +117,7 @@ while True:
                         else:
                             from model.convo import process
                             result = process(text)
-                            os.system('clear')
+                            #  
                             print(result)
 
                         end=time.perf_counter()

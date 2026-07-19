@@ -16,7 +16,7 @@ output_path = "/home/pi/Desktop/Virtual-Chetas/speech/speaker/speech.wav"
 def speech(text):
     if text:
         response = client.audio.speech.create(
-        model="canopylabs/orpheus-arabic-saudi",
+        model="canopylabs/orpheus-v1-english",
         voice="abdullah",
         response_format="wav",
         input=str(text).strip(),
