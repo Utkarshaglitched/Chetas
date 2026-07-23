@@ -9,19 +9,14 @@ import threading
 picam2.start()
 
 def vision():
-    # start = time.perf_counter()
 
-    # # FrameArray = []
 
     while state.vision_event.is_set():
         frame = picam2.capture_array()
-        # FrameArray.append(frame)
+        
 
         objectArray = []
         personArray = []
-
-        # if len(FrameArray) > 0:
-        #     frme = FrameArray[int(len(FrameArray) / 2)]
 
         results = yolo_model(frame,verbose=False)
 

@@ -8,6 +8,8 @@ import speak
 from variables import state,variables
 import threading
 from retirival.vision import vision
+from data.LTM import start_ltm_process,test
+
 
 voice_detected=False
 
@@ -16,17 +18,20 @@ vision_thread=threading.Thread(target=vision,daemon=True)
 vision_thread.start()
 print("starting camera")
 
+ltm_thread=threading.Thread(target=start_ltm_process,daemon=True)
 
 frames=[]
  
+speaking=False
+PauseTime=300.01
 
+start_speak_timer=time.perf_counter()
 while True:
     text = ""
     data=stream.read(CHUNK,exception_on_overflow=False)
 
     audio_np=np.frombuffer(data,dtype="int16").astype(np.float32)
     audio_np/=32768.0
-
     audio_tensor=torch.from_numpy(audio_np)
 
     result=vad(audio_tensor)
@@ -41,10 +46,11 @@ while True:
 
             if status=="end":
                 voice_detected=False
-                
+                print("Stopping LTM process")
+                state.ltm_mem_event.clear()
+                state.is_ltm=False
+                start_speak_timer=time.perf_counter()
                 print("starting whisper")
-
-                
                 
                 start=time.perf_counter()
                 audio_data = b"".join(frames)
@@ -71,6 +77,7 @@ while True:
 
                 try:
                     if text:
+                        speaking=True
                         model,conf=model_selector.select_model(text)
                         print(model)
                         if model=="conversation":
@@ -79,8 +86,6 @@ while True:
                         
                             res=process(text.strip())
                             if res:
-                                #  
-                                # print(res)
                                 
                                 print(f"\n{time.perf_counter()-after_spoke}\n")
                                 
@@ -117,7 +122,7 @@ while True:
                         else:
                             from model.convo import process
                             result = process(text)
-                            #  
+                              
                             print(result)
 
                         end=time.perf_counter()
@@ -133,7 +138,26 @@ while True:
                 vision_thread=threading.Thread(target=vision,daemon=True)
                 vision_thread.start()
                 print("starting camera")
-                
+                speaking=False
+
     
     if voice_detected:
             frames.append(data)
+
+
+
+    if (time.perf_counter()-start_speak_timer)>=10.00:
+                if not state.is_ltm:
+                    if len(variables.potential_memory)>0:
+                        state.vision_event.clear()
+                        vision_thread.join()
+                        state.ltm_mem_event.set()
+
+                        print("LTM memory started!!!")
+                        ltm_thread.start()
+
+                        print("LTM memory over!!!")
+                        start_speak_timer=time.perf_counter()
+
+
+

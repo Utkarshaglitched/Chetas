@@ -1,22 +1,21 @@
-
 import os
 from groq import Groq
 from pathlib import Path
 import subprocess
 from dotenv import load_dotenv
 import os
-
+from variables.variables import output_path
 
 load_dotenv()
 groq_api_key = os.getenv("GROQ_API_KEY")
 client = Groq(api_key=groq_api_key)
 
-output_path = "/home/pi/Desktop/Virtual-Chetas/speech/speaker/speech.wav"
+
 
 def speech(text):
     if text:
         response = client.audio.speech.create(
-        model="canopylabs/orpheus-v1-english",
+        model="canopylabs/orpheus-arabic-saudi",
         voice="abdullah",
         response_format="wav",
         input=str(text).strip(),
@@ -38,4 +37,3 @@ def speak():
         return True,""
     except Exception as e:
         return False,e
-    

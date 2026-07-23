@@ -36,7 +36,7 @@ def context(text,ppl,k=10):
         cntx.append( {
             p:(context,embed)
             })
-    return cntx
+    return cntx,embed
 
 def reranking(cntext):
     pass
