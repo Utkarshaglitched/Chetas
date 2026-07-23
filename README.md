@@ -1,5 +1,5 @@
-# Virtual-Chetas
-Virtual-Chetas is a voice-based assistant that listens for speech, transcribes it with Whisper, uses camera input for visual context, and routes the request to an Ollama model.
+# Chetas
+Chetas is a voice-based assistant that listens for speech, transcribes it with Whisper, uses camera input for visual context, and routes the request to an Ollama model.
 
 ## Folder Structure
 
