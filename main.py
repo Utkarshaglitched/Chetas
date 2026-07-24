@@ -8,7 +8,7 @@ import speak
 from variables import state,variables
 import threading
 from retirival.vision import vision
-from data.LTM import start_ltm_process,test
+from data.LTM import start_ltm_process
 
 
 voice_detected=False
@@ -146,7 +146,7 @@ while True:
 
 
 
-    if (time.perf_counter()-start_speak_timer)>=10.00:
+    if (time.perf_counter()-start_speak_timer)>=PauseTime:
                 if not state.is_ltm:
                     if len(variables.potential_memory)>0:
                         state.vision_event.clear()
@@ -156,8 +156,4 @@ while True:
                         print("LTM memory started!!!")
                         ltm_thread.start()
 
-                        print("LTM memory over!!!")
-                        start_speak_timer=time.perf_counter()
-
-
-
+                        

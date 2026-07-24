@@ -1,4 +1,7 @@
+from pathlib import Path
 import numpy
+
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 facial={
     "Ankit":numpy.load("npySaves/Ankit.npy"),
@@ -15,7 +18,7 @@ category_dict={
     "ObjectDetection":numpy.load("npySaves/obj.npy")
 }
 
-output_path = "/home/pi/Desktop/Virtual-Chetas/speech/speaker/speech.wav"
+output_path = str((BASE_DIR / "speech" / "speaker" / "speech.wav").resolve())
 
 vision_dict={
 

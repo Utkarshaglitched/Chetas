@@ -20,7 +20,9 @@ def speech(text):
         response_format="wav",
         input=str(text).strip(),
         )
-        response.write_to_file(output_path)
+        output_file = Path(output_path)
+        output_file.parent.mkdir(parents=True, exist_ok=True)
+        response.write_to_file(str(output_file))
         return True
     return False
 
@@ -32,8 +34,8 @@ def speak():
         "ffplay",
         "-nodisp",
         "-autoexit",
-        "/home/pi/Desktop/Virtual-Chetas/speech/speaker/speech.wav"
-        ])
+        output_path
+        ], check=True)
         return True,""
     except Exception as e:
         return False,e

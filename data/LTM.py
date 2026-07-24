@@ -9,50 +9,8 @@ import numpy
  
 
 
-def start_storing(wh,pl,sen,emb):
-
-    prompt=prompts.memory_prompt_builder(wh,pl,sen)
-
-    response=ollama.chat(
-        model=ollama_model,
-        messages=[
-            {
-                "role":"user",
-                "content":prompt
-            }
-        ]
-    )
-
-    raw_text = response["message"]["content"]
-    data=json.loads(raw_text)
-
-
-    if data["action"]=="insert":
-        res=add(pl,data["sentence"],emb)
-        if res:
-            print("New Data added")
-        else:
-            print("New Data addition failed")
-
-
-    elif data["action"]=="update":
-        up=update(data["replaces_id"],data["sentence"],emb)
-        if up:
-            print("data updated!!")
-        else:
-            print("failed to update data")
-
-
-    elif data["action"]=="duplicate":
-        print("No data addition needed")
-    
-    elif data["action"]=="ignore":
-        print("No data addition needed")
-    
-    print()
-    print(data)
-    print()
-    return data
+def start_storing(res):
+    pass
 
 def memory_status(memory_prompt):
     try:
@@ -63,7 +21,7 @@ def memory_status(memory_prompt):
         messages=memory_prompt,
         format=prompts.memory_schema,
         options={
-        "temperature": 0.4
+        "temperature": 0.1
         }
     )
 
@@ -74,6 +32,7 @@ def memory_status(memory_prompt):
 
         print(f"\033[91mMemory Decision: {data}\033[0m", flush=True)
 
+        return data
         # return data
 
     except json.JSONDecodeError as e:
@@ -119,13 +78,12 @@ def start_ltm_process():
 
         st=memory_status(prompt)
         if st:
+            storage_status=start_storing(st)
             done_storage.append(variables.potential_memory[cnt])
         cnt+=1
-
-    for i in done_storage:
-        variables.potential_memory.remove(i)
+    if len(done_storage)>0:
+        for i in done_storage:
+            variables.potential_memory.remove(i)
     state.is_ltm=False
     state.vision_event.clear()
-
-def test():
-    state.is_ltm=True
+    
