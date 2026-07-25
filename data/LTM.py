@@ -6,11 +6,62 @@ from variables import prompts,variables,state
 from data.databaseModel import add,update
 from retirival.cosine import consimilaritry
 import numpy
- 
+from retirival.RAGcontext import embed_convert
 
 
 def start_storing(res):
-    pass
+    """
+    Takes the model's decision dict and commits it to memory.db.
+    Returns True if the intended action was successfully applied,
+    False if it failed or the input was invalid.
+    """
+    if not isinstance(res, dict):
+        print("start_storing: invalid input, not a dict")
+        return False
+
+    action = res.get("action")
+    person = res.get("person", "")
+    sentence = res.get("sentence", "")
+    replace_id = res.get("replace_id")
+
+    if action == "ignore":
+        return True
+
+    if action == "duplicate":
+        return True
+
+    if action == "insert":
+        if not person or not sentence:
+            print("start_storing: insert requires person and sentence")
+            return False
+        try:
+            embedding = embed_convert(sentence)
+        except Exception as e:
+            print("start_storing: embedding generation failed:", e)
+            return False
+        return add(person, sentence, embedding)
+
+    if action == "update":
+        if replace_id is None:
+            print("start_storing: update requires a replace_id")
+            return False
+        if not sentence:
+            print("start_storing: update requires a sentence")
+            return False
+        try:
+            embedding = embed_convert(sentence)
+        except Exception as e:
+            print("start_storing: embedding generation failed:", e)
+            return False
+        success = update(replace_id, sentence, embedding)
+        if not success:
+            print(f"start_storing: update failed, no memory found with id={replace_id}")
+        return success
+
+    print(f"start_storing: unknown action '{action}'")
+    return False
+
+
 
 def memory_status(memory_prompt):
     try:
@@ -62,28 +113,35 @@ def ignore_check(emb):
 
 
 def start_ltm_process():
-    state.is_ltm=True
-    cnt=0
-    done_storage=[
+    state.is_ltm = True
+    done_storage = []
+    try:
+        while state.ltm_mem_event.is_set():
+            if not variables.potential_memory:
+                break  # nothing left to process
 
-    ]
+            item = variables.potential_memory[0]
 
-    while state.ltm_mem_event.is_set():
+            prompt = [
+                prompts.system_memory_prompt,
+                item
+            ]
 
+            st = memory_status(prompt)
 
-        prompt = [
-            prompts.system_memory_prompt,
-            variables.potential_memory[cnt]
-        ]
+            if st:
+                storage_status = start_storing(st)
+                if storage_status:
+                    done_storage.append(item)
+                else:
+                    print(f"start_ltm_process: storage failed for item, skipping: {item}")
+            else:
+                print(f"start_ltm_process: memory_status failed for item, skipping: {item}")
 
-        st=memory_status(prompt)
-        if st:
-            storage_status=start_storing(st)
-            done_storage.append(variables.potential_memory[cnt])
-        cnt+=1
-    if len(done_storage)>0:
-        for i in done_storage:
-            variables.potential_memory.remove(i)
-    state.is_ltm=False
-    state.vision_event.clear()
+            variables.potential_memory.pop(0)  
+
+    finally:
+        state.is_ltm = False
+        state.vision_event.clear()
     
+ 
